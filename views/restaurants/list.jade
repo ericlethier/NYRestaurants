@@ -1,0 +1,45 @@
+extends ../layout
+
+block content
+    div.container
+        div.page-header
+            h1= title
+        div.content
+            table.table.table-hover
+                thead
+                    tr
+                        th Name
+                        th Cuisine
+                        th Borough
+                        - if (user)
+                            th Action
+                tbody
+                    each restaurant, i in restaurantlist
+                        tr
+                            td(style='vertical-align:middle')
+                                a(href="/restaurants/view/#{restaurant.restaurant_id}")= restaurant.name
+                            td(style='vertical-align:middle')= restaurant.cuisine
+                            td(style='vertical-align:middle')= restaurant.borough
+                            - if (user)
+                                td
+                                    a.btn.btn-danger.btn-lg(href="/restaurants/delete/#{restaurant.restaurant_id}") 
+                                        span.glyphicon.glyphicon-trash
+
+            nav
+                ul.pagination
+                    li
+                      a(href='#', aria-label='Previous')
+                        span(aria-hidden='true') &laquo;    
+                    li.active
+                      a(href='#') 1
+                    li
+                      a(href='#') 2    
+                    li
+                      a(href='#') 3
+                    li
+                      a(href='#') 4   
+                    li
+                      a(href='#') 5  
+                    li
+                      a(href='#', aria-label='Next')
+                        span(aria-hidden='true') &raquo;

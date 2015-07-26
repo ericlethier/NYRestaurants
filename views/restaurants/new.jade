@@ -1,0 +1,44 @@
+extends ../layout
+
+block content
+    div.container
+        div.page-header
+            h1= title
+        .well.well-sm
+            form.form-horizontal(method="post", id="newrestaurant", action="/restaurants/new", role="form")
+                div.form-group
+                    label(for='name').col-sm-1.control-label Name:
+                    div.col-sm-4
+                        input.form-control(id="name", type="text", name="name", placeholder="Enter the name" class='form-control', required=true)
+                div.form-group
+                    label(for='cuisine').col-sm-1.control-label Cuisine:
+                    div.col-sm-4
+                        select.form-control(id='cuisine', name='cuisine', required=true)
+                            each cuisine, i in cuisines
+                                option(value=cuisine) #{cuisine}
+                div.form-group
+                    label(for='street').col-sm-1.control-label Street:
+                    div.col-sm-4
+                        input.form-control(id="street", type="text", name="street", placeholder="Enter the street" class='form-control', required=true)
+                 div.form-group
+                    label(for='zipcode').col-sm-1.control-label Zipcode:
+                    div.col-sm-2
+                        input.form-control(id="zipcode", type="text", name="zipcode", placeholder="Enter the  zipcode" class='form-control', required=true)
+                div.form-group
+                    label(for='building').col-sm-1.control-label Building:
+                    div.col-sm-2
+                        input.form-control(id="building", type="text", name="building", placeholder="Enter the building" class='form-control', required=true)    
+                div.form-group
+                    label(for='borough').col-sm-1.control-label Borough:
+                    div.col-sm-2
+                        select.form-control(id='borough', name='borough', required=true)
+                            option(value='Manhattan', selected='selected') Manhattan
+                            option(value='Brooklyn') Brooklyn
+                            option(value='Queens') Queens
+                            option(value='Bronx') Bronx
+                            option(value='Staten Island') Staten Island
+                div.form-group
+                    div.col-sm-offset-1.col-sm-4
+                        button.login.btn.btn-primary(type='submit') Create
+        div.pull-right
+            a(href="/restaurants") Return to restaurant list 

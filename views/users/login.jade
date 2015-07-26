@@ -1,0 +1,21 @@
+doctype html
+html
+    head
+        link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+        link(rel='stylesheet', href='/stylesheets/signin.css')
+        script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+        script(src='/bootstrap/js/bootstrap.min.js')
+    body
+        div.container
+            form.form-signin(method="post", id="login", action="/users/login", role="form")
+                h2.form-signin-heading Please sign in
+
+                -if(message.length > 0)
+                    .alert.alert-danger !{message}
+
+                label.sr-only(for='username') Username
+                input#username.form-control(name="username", type='type', placeholder='Username', required=true, autofocus=true)
+                label.sr-only(for='inputPassword') Password
+                input#inputPassword.form-control(name="password", type='password', placeholder='Password', required=true)
+                button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign in  
+

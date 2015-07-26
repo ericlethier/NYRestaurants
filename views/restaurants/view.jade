@@ -1,0 +1,98 @@
+extends ../layout
+
+block content
+    div.container
+        div.page-header
+            h1= title
+        div.row
+            .well.well-sm
+                div.col-md-6
+                    - if (average_score != -1)
+                        span(style='font-size:40px') Rating 
+                        span(style='font-size:40px')= average_score
+                        span(style='font-size:40px') % 
+                        p
+                    form.form-horizontal
+                        div.form-group
+                            label.control-label.col-sm-2 Cuisine
+                            div.col-sm-10
+                                p.form-control-static= restaurant.cuisine
+                        div.form-group
+                            label.control-label.col-sm-2 Address
+                            div.col-sm-10
+                                p.form-control-static= restaurant.address.street
+                        div.form-group
+                            label.control-label.col-sm-2 Zipcode
+                            div.col-sm-10
+                                p.form-control-static= restaurant.address.zipcode
+                        div.form-group
+                            label.control-label.col-sm-2 Building
+                            div.col-sm-10
+                                p.form-control-static= restaurant.address.building
+                        div.form-group
+                            label.control-label.col-sm-2 Borough
+                            div.col-sm-10
+                                p.form-control-static= restaurant.borough
+                div-col-md-6
+                    img.img-responsive.img-rounded(src='/images/restaurant.jpg')
+                    //img(src=google_maps_address)
+
+        - if (typeof(restaurant.grades) != 'undefined')
+            div.row
+                div.col-md-12.center-block
+
+                    table.table.table-hover
+                        thead
+                            tr
+                                th User
+                                th Comment
+                                th Grade
+                                th Date
+                        tbody
+                            each grade, i in restaurant.grades
+                                tr
+                                    td 
+                                        div.col-xs-6.col-md-3
+                                            a.thumbnail(href="#")
+                                                img.img-responsive.img-rounded(src='/images/user_picture.png')
+                                            div.caption
+                                                p= grade.user
+                                    td= grade.comment
+                                    td= grade.grade
+                                    td #{prettyDate(grade.date)}
+
+
+                - if (user)
+                    div.col-md-12.center-block
+                        // Trigger the modal with a button
+                        button.btn.btn-info.btn-md(type='button', data-toggle='modal', data-target='#myModal') Add New Comment
+
+                div.pull-right
+                    a(href="/restaurants") Return to restaurant list 
+
+                    // Modal
+                    #myModal.modal.fade(role='dialog')
+                        .modal-dialog
+                            // Modal content
+                            .modal-content
+                                .modal-header
+                                    button.close(type='button', data-dismiss='modal') &times;
+                                    h4 Add Comment
+                                .modal-body
+                                        form(role="form", method="post", id="addcomment", action="/restaurants/comments/add")
+                                            input(type="hidden" id="restaurant_id" name="restaurant_id" value="#{restaurant.restaurant_id}")
+                                            div.form-group
+                                                label(for='comment') Comment:
+                                                textarea.form-control(id="comment", rows="6", cols="60", name="comment", placeholder="Enter your comment", required=true)
+                                            div.form-group
+                                                label(for='grade') Rating:
+                                                select.form-control(id='grade', name='grade', required=true)
+                                                    option(value=5, selected='selected') *****
+                                                    option(value=4) ****
+                                                    option(value=3) ***
+                                                    option(value=2) **
+                                                    option(value=1) *
+                                            div.form-group
+                                                button.btn.btn-danger(type='button', data-dismiss='modal') Cancel
+                                                | &nbsp;&nbsp;
+                                                button.login.btn.btn-primary(type='submit') Add Comment

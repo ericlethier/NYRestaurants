@@ -1,0 +1,62 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    title Marker animations with google
+    style.
+      html, body, #map-canvas {
+      height: 100%;
+      margin: 0px;
+      padding: 0px
+      }
+      #panel {
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      margin-left: -180px;
+      z-index: 5;
+      background-color: #fff;
+      padding: 5px;
+      border: 1px solid #999;
+      }
+    script(src="https://maps.googleapis.com/maps/api/js?v=3.exp")
+    script.
+      var newyork = new google.maps.LatLng(40.81, -73.85);
+
+      var neighborhoods = [];
+      for (var i = 0; i < points.length; i++){
+        neighborhoods.push(new google.maps.Point(points[i]));
+      }
+      alert(neighborhoods);
+      var markers = [];
+      var iterator = 0;
+      var map;
+      function initialize() {
+        var mapOptions = {
+            zoom: 12,
+            center: newyork
+        };
+        map = new google.maps.Map(document.getElementById('map-canvas'),
+        mapOptions);
+      }
+      function drop() {
+        for (var i = 0; i < neighborhoods.length; i++) {
+            setTimeout(function() {
+                addMarker();
+            }, i * 200);
+        }
+      }
+      function addMarker() {
+        markers.push(new google.maps.Marker({
+            position: neighborhoods[iterator],
+            map: map,
+            draggable: false,
+            animation: google.maps.Animation.DROP
+        }));
+        iterator++;
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    body
+        #panel(style="margin-left: -52px")
+            button#drop(onclick="drop()") Drop Markers
+        #map-canvas
