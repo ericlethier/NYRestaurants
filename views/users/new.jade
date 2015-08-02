@@ -5,23 +5,43 @@ block content
     div.page-header
         h1= title
     br
-    form(role='form', action='/users/new',method='post',enctype='multipart/form-data',  style='max-width: 300px;')
-        .form-group
-            label.sr-only(for='username') Username
-            input.form-control(type='text', name='username', placeholder='Username')
-        .form-group
-            label.sr-only(for='email') Email address
-            input.form-control(type='text', name='email', placeholder='Email')
-        .form-group
-            label.sr-only(for='password') Password
-            input.form-control(type='password', name='password', placeholder='Password')
-        .form-group
-            label.sr-only(for='password2') Confirm password
-            input.form-control(type='password', name='password2', placeholder='Confirm Password')
-        .form-group
-            label.sr-only(for='avatar') Profile picture
-            input.form-control(type="file", name="avatar", id="avatar")
-        button.btn.btn-primary(type='submit') Submit
-        span   
-        a(href='/')
-        button.btn.btn-default(type='button') Cancel
+    #loginModal
+        .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') x
+            h3 Have an Account?
+        .modal-body
+            .well(style='max-width: 300px;')
+                ul.nav.nav-tabs
+                    li.active
+                        a(href='#login', data-toggle='tab', aria-controls='login', role='tab') Login
+                    li
+                        a(href='#register', data-toggle='tab', aria-controls='register', role='tab') Create Account
+                #myTabContent.tab-content
+                    #login.tab-pane.active.in(role='tabpanel')
+                        form.form-signin(action='/users/login', method='post', id='login', role='form', style='max-width: 300px;')
+                            .form-group
+                                label.sr-only(for='username') Username
+                                input.form-control(type='text', name='username', placeholder='Username')
+                            .form-group
+                                label.sr-only(for='password') Password
+                                input.form-control(type='password', name='password', placeholder='Password')
+                            button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign in  
+                    #register.tab-pane.fade(role='tabpanel')
+                        form.form-signin(action='/users/new',method='post', id='register', enctype='multipart/form-data', role='form', style='max-width: 300px;')
+                            .form-group
+                                label.sr-only(for='username') Username
+                                input.form-control(type='text', name='username', placeholder='Username')
+                            .form-group
+                                label.sr-only(for='email') Email address
+                                input.form-control(type='text', name='email', placeholder='Email')
+                            .form-group
+                                label.sr-only(for='password') Password
+                                input.form-control(type='password', name='password', placeholder='Password')
+                            .form-group
+                                label.sr-only(for='password2') Confirm password
+                                input.form-control(type='password', name='password2', placeholder='Confirm Password')
+                            .form-group
+                                label.sr-only(for='avatar') Profile picture
+                                input.form-control(type='file', name='avatar', id='avatar')
+                            button.btn.btn-lg.btn-primary.btn-block(type='submit') Register
+      

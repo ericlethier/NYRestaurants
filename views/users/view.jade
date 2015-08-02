@@ -5,28 +5,35 @@ block content
         div.page-header
             h1= title
         div.row
-            div.col-md-8
+            div.col-md-12
                 .well.well-sm
-                    form.form-horizontal
+                    form.form-horizontal(role='form', style='max-width: 500px;')
                         div.form-group
-                            label.control-label.col-sm-2 Username
-                            div.col-md-6
+                            label.control-label.col-md-4 Username
+                            div.col-md-8
                                 p.form-control-static= user.username
                         div.form-group
-                            label.control-label.col-sm-2 Password
-                            div.col-md-6
-                                p.form-control-static 
-                                     button.btn.btn-info.btn-md(type='button', data-toggle='modal', data-target='#myModal') Change Password
+                            label.control-label.col-md-4 Avatar
+                            div.col-md-8
+                                img.img-responsive.img-thumbnail(width='200', height='200', src='/images/user_picture.png')
+                            div.col-md-4  
+                            div.col-md-8
+                                button.btn.btn-info.btn-md(type='button', data-toggle='modal', data-target='#avatarModal') Update Avatar
                         div.form-group
-                            label.control-label.col-sm-2 Email
-                            div.col-md-6
+                            label.control-label.col-md-4 Password
+                            div.col-md-8
+                                p.form-control-static 
+                                     button.btn.btn-info.btn-md(type='button', data-toggle='modal', data-target='#pwdModal') Change Password
+                        div.form-group
+                            label.control-label.col-md-4 Email
+                            div.col-md-8
                                 p.form-control-static= user.email
                         div.form-group
-                            label.control-label.col-sm-2 Created At
-                            div.col-md-6
+                            label.control-label.col-md-4 Created At
+                            div.col-md-8
                                 p.form-control-static= user.created_at
                     // Modal
-                    #myModal.modal.fade(role='dialog')
+                    #pwdModal.modal.fade(role='dialog')
                         .modal-dialog
                             // Modal content
                             .modal-content
@@ -34,15 +41,34 @@ block content
                                     button.close(type='button', data-dismiss='modal') &times;
                                     h4 Change Password
                                 .modal-body
-                                        form(role="form", method="post", id="change_password", action="/users/change_password")
-                                            input(type="hidden" id="username" name="username" value="#{user.username}")
-                                            div.form-group
-                                                label(for='new_password') New Password:
-                                                input.form-control(id="new_password", type="text", name="new_password", placeholder="Enter your new password" class='form-control', required=true)
-                                            div.form-group
-                                                label(for='new_password2') Confirm your new password:
-                                                input.form-control(id="new_password2", type="text", name="new_password2", placeholder="Confirm your new password" class='form-control', required=true)
-                                            div.form-group
-                                                button.btn.btn-danger(type='button', data-dismiss='modal') Cancel
-                                                | &nbsp;&nbsp;
-                                                button.login.btn.btn-primary(type='submit') Change Passowrd
+                                    form(role='form', method='post', id='change_password', action='/users/change_password')
+                                        input(type='hidden' id='username' name='username' value='#{user.username}')
+                                        div.form-group
+                                            label(for='new_password') New Password:
+                                            input.form-control(id='new_password', type='text', name='new_password', placeholder='Enter your new password' class='form-control', required=true)
+                                        div.form-group
+                                            label(for='new_password2') Confirm your new password:
+                                            input.form-control(id='new_password2', type='text', name='new_password2', placeholder='Confirm your new password' class='form-control', required=true)
+                                        div.form-group
+                                            button.btn.btn-danger(type='button', data-dismiss='modal') Cancel
+                                            | &nbsp;&nbsp;
+                                            button.login.btn.btn-primary(type='submit') Update
+
+                     // Modal
+                    #avatarModal.modal.fade(role='dialog')
+                        .modal-dialog
+                            // Modal content
+                            .modal-content
+                                .modal-header
+                                    button.close(type='button', data-dismiss='modal') &times;
+                                    h4 Change Avatar
+                                .modal-body
+                                    form(role='form', method='post', id='change_avatar', action='/users/update_avatar',enctype='multipart/form-data')
+                                        input(type='hidden' id='username' name='username' value='#{user.username}')
+                                        div.form-group
+                                            label(for='avatar') Profile picture
+                                            input.form-control(type='file', name='avatar', id='avatar')
+                                         div.form-group
+                                            button.btn.btn-danger(type='button', data-dismiss='modal') Cancel
+                                            | &nbsp;&nbsp;
+                                            button.login.btn.btn-primary(type='submit') Update

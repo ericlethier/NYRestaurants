@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "body-parser": "~1.12.0",
+    "chai": "^3.2.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.3.4",
     "debug": "~2.1.1",
@@ -14,6 +15,7 @@
     "express-session": "^1.0.2",
     "express-validator": "~2.13.0",
     "jade": "~1.9.2",
+    "mocha": "^2.2.5",
     "mongodb": "*",
     "mongoose": "~4.0.4",
     "morgan": "~1.5.1",
@@ -21,11 +23,14 @@
     "passport": "^0.2.1",
     "passport-google": "^0.3.0",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "file:passport-local-mongoose-1.0.0.tgz",
-    "serve-favicon": "~2.2.0"
+    "serve-favicon": "~2.2.0",
+    "should": "^7.0.2",
+    "grunt-mocha-test": "^0.12.7",
+    "grunt-contrib-jshint": "^0.11.2"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
-    "grunt-contrib-watch": "^0.6.1"
+    "grunt-contrib-watch": "^0.6.1",
+    "passport-local-mongoose": "^1.0.1"
   }
 }

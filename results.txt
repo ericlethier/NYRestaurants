@@ -1,0 +1,36 @@
+
+[0m[0m
+[0m  Restaurant[0m
+[0m    Validation[0m
+[2K[0G    [32m  √[0m[90m validates a restaurant id[0m
+[2K[0G    [32m  √[0m[90m validates a restaurant name[0m
+[2K[0G    [32m  √[0m[90m validates a restaurant cuisine[0m
+[2K[0G    [32m  √[0m[90m validates a restaurant borough[0m
+[0m    Storage[0m
+[2K[0G    [32m  √[0m[90m creates a new restaurant[0m
+[2K[0G    [32m  √[0m[90m retrieves a restaurant[0m
+[2K[0G    [32m  √[0m[90m adds a new comment[0m
+[2K[0G    [32m  √[0m[90m adds a new comment[0m
+[2K[0G    [32m  √[0m[90m retrieves comments[0m
+[2K[0G    [32m  √[0m[90m removes a restaurant[0m
+[2K[0G    [32m  √[0m[90m checks that the deleted restaurant doesnt exist[0m
+
+[0m  User[0m
+[0m    Validation[0m
+[2K[0G    [32m  √[0m[90m validates an email address[0m
+[2K[0G    [32m  √[0m[90m validates the format of an email address[0m
+[2K[0G    [32m  √[0m[90m validates a username[0m
+[2K[0G    [32m  √[0m[90m validates a short username[0m
+[2K[0G    [32m  √[0m[90m validates a long username[0m
+[2K[0G    [32m  √[0m[90m validates a password[0m
+[2K[0G    [32m  √[0m[90m validates a short password[0m
+[2K[0G    [32m  √[0m[90m validates a long password[0m
+[0m    Storage[0m
+[2K[0G    [32m  √[0m[90m creates a user[0m
+[2K[0G    [32m  √[0m[90m finds the user by id[0m
+[2K[0G    [32m  √[0m[90m deletes a user[0m
+[2K[0G    [32m  √[0m[90m checks that the deleted user doesnt exist[0m
+
+
+[92m [0m[32m 23 passing[0m[90m (647ms)[0m
+

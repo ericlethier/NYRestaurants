@@ -1,3 +1,6 @@
+/* jshint node: true */
+'use strict';
+
 var express = require('express');
 var mongoose = require('mongoose');
 var Restaurant = mongoose.model('Restaurant');
@@ -11,7 +14,7 @@ router.get('/new', function(req, res) {
 
 	Restaurant.getCuisineList(function(err,cuisines){
 		if (err) {
-			res.send(err + " / There was a problem adding the information to the database.");
+			res.send(err + ' / There was a problem adding the information to the database.');
 		} else {
 			console.log(cuisines);
 	    	res.render('restaurants/new', { title: 'Create a new restaurant', cuisines: cuisines.sort()});
@@ -26,31 +29,25 @@ router.post('/new', function(req, res) {
     }
 
     // Get the max restaurant_id
-    Restaurant.getMaxRestaurantId(function(err, restaurant) {
-    	var restaurant_id = restaurant.restaurant_id + 1;
+    var restaurant_id = Math.floor(Date.now());
+     // Get our form values. These rely on the 'name' attributes
+	var newRestaurant = new Restaurant({
+		restaurant_id : restaurant_id,
+    	name : req.body.name,
+	   	address : { street : req.body.street, zipcode : req.body.zipcode, building : req.body.building },
+		cuisine : req.body.cuisine,
+		borough : req.body.borough
+    });
+    newRestaurant.save(function(err) {
     	if (err) {
-    			res.send(err + " / There was a problem adding the information to the database.");
-    	}
-    	 // Get our form values. These rely on the "name" attributes
-	    var newRestaurant = Restaurant({
-			restaurant_id : restaurant_id,
-    		name : req.body.name,
-	   		address : { street : req.body.street, zipcode : req.body.zipcode, building : req.body.building },
-			cuisine : req.body.cuisine,
-			borough : req.body.borough
-    	});
-
-    	newRestaurant.save(function(err) {
-    		if (err) {
-    			res.send("There was a problem adding the information to the database.");
-    		} else {
-    	            // If it worked, set the header so the address bar doesn't still say /addrestaurant
-    	            res.location("/restaurants");
-    	            // And forward to success page
-    	            req.flash('success_messages', 'Restaurant ' + req.body.name + ' has been added');
-    	            res.redirect("/restaurants");
-    	    }
-    	})
+    		res.send('There was a problem adding the information to the database.');
+    	} else {
+            // If it worked, set the header so the address bar doesn't still say /addrestaurant
+            res.location('/restaurants');
+            // And forward to success page
+            req.flash('success_messages', 'Restaurant ' + req.body.name + ' has been added');
+            res.redirect('/restaurants');
+        }
     });    
 });
 
@@ -69,14 +66,14 @@ router.get('/view/:id', function(req, res) {
     Restaurant.findRestaurantById(req.params.id, function(err1,doc){
         if (err1) {
             // If it failed, return error
-            res.send("There was a problem adding the information to the database.");
+            res.send('There was a problem adding the information to the database.');
         }
         else {
         	/* Compute the average grade of the restaurant. */
 			Restaurant.getAverageScoreById(req.params.id, function(err2,score) {
 				if (err2) {
             		// If it failed, return error
-            		res.send("There was a problem adding the information to the database.");
+            		res.send('There was a problem adding the information to the database.');
         		}
         		else {
         			var average = -1;
@@ -85,11 +82,11 @@ router.get('/view/:id', function(req, res) {
         				average = Math.round(score[0].avgGrade * 20);
         			}
                     console.log(doc.address.coord);
-                    var encoded_address = encodeURIComponent(doc.address.street) + "," + "New York+USA";
-                    var long_lat = "0,0";
+                    var encoded_address = encodeURIComponent(doc.address.street) + ',' + 'New York+USA';
+                    var long_lat = '0,0';
                     //doc.address.loc.coordinates;
 
-                    var google_maps_address = "https://maps.googleapis.com/maps/api/staticmap?center=" + encoded_address + "&zoom=15&size=400x300&markers=" + long_lat + "&sensor=false"
+                    var google_maps_address = 'https://maps.googleapis.com/maps/api/staticmap?center=' + encoded_address + '&zoom=15&size=400x300&markers=' + long_lat + '&sensor=false';
 		            res.render('restaurants/view', {title: doc.name,
         	                                       restaurant : doc, 
                                                    google_maps_address : google_maps_address, 
@@ -107,7 +104,7 @@ router.post('/search', function(req, res) {
     Restaurant.findRestaurantByName(req.body.search, function(err,docs){
         if (err) {
             // If it failed, return error
-            res.send("There was a problem adding the information to the database.");
+            res.send('There was a problem adding the information to the database.');
         }
         else {
 	        res.render('restaurants/list', {title: 'Search Results', 
@@ -125,14 +122,14 @@ router.get('/delete/:id', function(req, res) {
 
         if (err) {
             // If it failed, return error
-            res.send("There was a problem adding the information to the database.");
+            res.send('There was a problem adding the information to the database.');
         }
         else {
             // If it worked, set the header so the address bar doesn't still say /addrestaurant
-            res.location("/restaurants");
+            res.location('/restaurants');
             // And forward to success page
             req.flash('success_messages', 'Restaurant ' + doc.name + ' has been deleted');
-            res.redirect("/restaurants");
+            res.redirect('/restaurants');
         }
     });
 });
@@ -147,21 +144,20 @@ router.post('/comments/add', function(req, res) {
     var comment = req.body.comment;
     var grade = Number(req.body.grade);
     var date = new Date();
-    var user = req.session.user.username
+    var user = req.session.user.username;
 
-    var comment_obj = {"grade": grade, "comment":comment, "date":date, "user":user};
+    var comment_obj = {'grade': grade, 'comment':comment, 'date':date, 'user':user};
 
     Restaurant.addComment(restaurant_id, comment_obj, function(err,doc) {
-//    collection.update({'restaurant_id': id},{'$push': {'grades':comment_obj}},function(err,doc){
         if (err) {
             // If it failed, return error
-            res.send("There was a problem adding the information to the database.");
+            res.send('There was a problem adding the information to the database.');
         }
         else {
             // If it worked, set the header so the address bar doesn't still say /addrestaurant
-            res.location("/restaurants/view/" + restaurant_id);
+            res.location('/restaurants/view/' + restaurant_id);
             // And forward to success page
-            res.redirect("/restaurants/view/" + restaurant_id);
+            res.redirect('/restaurants/view/' + restaurant_id);
         }
     });
 });

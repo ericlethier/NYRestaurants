@@ -44,8 +44,12 @@ html
 
                     -if(!user)
                         ul.nav.navbar-nav.navbar-right
+                            li
+                                a(href="/users/new")
+                                    span.glyphicon.glyphicon-user &nbsp;Register
                             li.dropdown
-                                a.dropdown-toggle(href="#" id="login" data-toggle="dropdown" role="button" aria-expanded="false") Login
+                                a.dropdown-toggle(href="#" id="login" data-toggle="dropdown" role="button" aria-expanded="false")
+                                    span.glyphicon.glyphicon-log-in &nbsp;Login
                                 ul.dropdown-menu(style="padding: 15px;min-width: 250px;")
                                     li
                                         div.row
@@ -63,8 +67,6 @@ html
                                                     hr
                                                     div.input-group.input-group-md
                                                         button.login.btn.btn-primary(type='submit') Login
-                                                        span  Or 
-                                                        a(href="/users/new") Register
                     -if(user)                
                         ul.nav.navbar-nav.navbar-right
                             li.dropdown

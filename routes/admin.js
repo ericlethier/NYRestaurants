@@ -1,6 +1,7 @@
+/* jshint node: true */
+'use strict';
+
 var express = require('express');
-var mongoose = require('mongoose');
-var passport = require('passport');
 var User = require('../models/user');
 var router = new express.Router();
 
@@ -8,7 +9,7 @@ router.get('/', function(req, res) {
 	if (!req.isAuthenticated()) {
         res.redirect('/users/nologin');
     }
-    if (req.user.isAdmin == false) {
+    if (req.user.isAdmin === false) {
        	req.flash('error_messages', ['You are not an administrator']);
         res.redirect('/restaurants');   
     }
